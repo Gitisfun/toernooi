@@ -1,6 +1,6 @@
 <template>
   <aside class="sidebar" :aria-label="showStandings ? 'Legenda en standen' : 'Legenda'">
-    <div class="sidebar__card">
+    <div class="sidebar__card sidebar__card--legend">
       <h2 class="sidebar__heading">Legenda</h2>
       <ul class="legend">
         <li class="legend__item">
@@ -25,9 +25,7 @@
             <span class="standings__rank">{{ row.rank }}</span>
             <div class="standings__team-block">
               <span class="standings__team">{{ row.team.name }}</span>
-              <span class="standings__sub"
-                >{{ row.played }} wedstr. · {{ row.wins }}-{{ row.draws }}-{{ row.losses }}</span
-              >
+              <span class="standings__sub">{{ row.played }} wedstr. · {{ row.wins }}-{{ row.draws }}-{{ row.losses }}</span>
             </div>
             <span class="standings__pts">{{ row.points }}</span>
           </li>
@@ -189,5 +187,16 @@ function standingsRowsSorted(groupKey: string): StandingRow[] {
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   color: var(--color-forest);
+}
+
+@media (max-width: 640px) {
+  .sidebar__card--legend {
+    display: none;
+  }
+
+  /* Geen lege aside als alleen legenda (zoals homepage met showStandings=false) */
+  .sidebar:not(:has(.sidebar__card:not(.sidebar__card--legend))) {
+    display: none;
+  }
 }
 </style>

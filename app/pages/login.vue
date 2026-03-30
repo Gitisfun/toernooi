@@ -36,6 +36,12 @@ definePageMeta({
   middleware: 'login-redirect',
 });
 
+useSeoMeta({
+  title: 'Inloggen beheer',
+  description: 'Beheerderslogin voor het toernooi Sporting Oppem.',
+  robots: 'noindex, nofollow',
+});
+
 const authStore = useAuthStore();
 const username = ref('');
 const password = ref('');

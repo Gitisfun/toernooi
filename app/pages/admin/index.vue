@@ -97,6 +97,12 @@ definePageMeta({
   middleware: 'admin-auth',
 });
 
+useSeoMeta({
+  title: 'Beheer toernooi',
+  description: 'Intern beheerpaneel voor het toernooi Sporting Oppem.',
+  robots: 'noindex, nofollow',
+});
+
 const authStore = useAuthStore();
 const tournamentStore = useTournamentStore();
 const teamsStore = useTeamsStore();

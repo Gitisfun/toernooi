@@ -261,12 +261,12 @@
                   <th class="admin-table__th-narrow">#</th>
                   <th>Team</th>
                   <th class="admin-table__th-narrow">Wed</th>
-                  <th class="admin-table__th-narrow">W</th>
-                  <th class="admin-table__th-narrow">G</th>
-                  <th class="admin-table__th-narrow">V</th>
+                  <th class="admin-table__th-narrow admin-table__col--hide-mobile">W</th>
+                  <th class="admin-table__th-narrow admin-table__col--hide-mobile">G</th>
+                  <th class="admin-table__th-narrow admin-table__col--hide-mobile">V</th>
                   <th class="admin-table__th-narrow admin-table__th-pts">P</th>
-                  <th class="admin-table__th-narrow">DV</th>
-                  <th class="admin-table__th-narrow">DT</th>
+                  <th class="admin-table__th-narrow admin-table__col--hide-mobile">DV</th>
+                  <th class="admin-table__th-narrow admin-table__col--hide-mobile">DT</th>
                   <th class="admin-table__th-narrow">DS</th>
                 </tr>
               </thead>
@@ -275,12 +275,12 @@
                   <td class="admin-table__td-center">{{ row.rank }}</td>
                   <td>{{ row.team.name }}</td>
                   <td class="admin-table__td-center">{{ row.played }}</td>
-                  <td class="admin-table__td-center">{{ row.wins }}</td>
-                  <td class="admin-table__td-center">{{ row.draws }}</td>
-                  <td class="admin-table__td-center">{{ row.losses }}</td>
+                  <td class="admin-table__td-center admin-table__col--hide-mobile">{{ row.wins }}</td>
+                  <td class="admin-table__td-center admin-table__col--hide-mobile">{{ row.draws }}</td>
+                  <td class="admin-table__td-center admin-table__col--hide-mobile">{{ row.losses }}</td>
                   <td class="admin-table__td-center admin-table__td-pts">{{ row.points }}</td>
-                  <td class="admin-table__td-center">{{ row.goalsFor }}</td>
-                  <td class="admin-table__td-center">{{ row.goalsAgainst }}</td>
+                  <td class="admin-table__td-center admin-table__col--hide-mobile">{{ row.goalsFor }}</td>
+                  <td class="admin-table__td-center admin-table__col--hide-mobile">{{ row.goalsAgainst }}</td>
                   <td class="admin-table__td-center">{{ row.goalDifference }}</td>
                 </tr>
               </tbody>
@@ -732,6 +732,12 @@ async function onDrop(groupKey: string, toIndex: number) {
 
 .admin-table--standings tbody tr:hover td {
   background: rgba(26, 77, 46, 0.03);
+}
+
+@media (max-width: 640px) {
+  .admin-table--standings .admin-table__col--hide-mobile {
+    display: none;
+  }
 }
 
 .admin-table__td-center {

@@ -1,6 +1,10 @@
 <template>
   <div class="game" :class="{ 'game--played': isPlayed }">
-    <div class="game__time">{{ time }}</div>
+    <div class="game__time">
+      <span class="game__time-start">{{ timeStart }}</span>
+      <span class="game__time-sep" aria-hidden="true"> - </span>
+      <span class="game__time-end">{{ timeEnd }}</span>
+    </div>
     <div class="game__home" :class="{ 'game__team--winner': homeWins, 'game__team--tbd': homeTeamTbd }">
       {{ homeTeam }}
     </div>
@@ -48,7 +52,8 @@
 <script setup lang="ts">
 const props = withDefaults(
   defineProps<{
-    time: string;
+    timeStart: string;
+    timeEnd: string;
     homeTeam: string;
     awayTeam: string;
     /** Team nog niet bekend (knockout-placeholder). */
@@ -107,8 +112,10 @@ function formatPenalty(value: number | null | undefined) {
 <style scoped>
 .game {
   display: grid;
-  grid-template-columns: 88px 1fr auto 1fr;
+  /* minmax(0,1fr) zodat teamnamen mogen krimpen i.p.v. de rij breder dan het scherm te maken */
+  grid-template-columns: 5.5rem minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
+  min-width: 0;
   padding: 12px 16px;
   border-bottom: 1px solid #e8ebe6;
   font-size: 14px;
@@ -126,6 +133,10 @@ function formatPenalty(value: number | null | undefined) {
 }
 
 .game__time {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0;
   color: #5c6b5f;
   font-size: 13px;
   font-weight: 600;
@@ -133,15 +144,21 @@ function formatPenalty(value: number | null | undefined) {
 }
 
 .game__home {
+  min-width: 0;
   text-align: right;
   font-weight: 600;
   color: #1f2937;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .game__away {
+  min-width: 0;
   text-align: left;
   font-weight: 600;
   color: #1f2937;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .game__team--winner {
@@ -161,7 +178,8 @@ function formatPenalty(value: number | null | undefined) {
   align-items: center;
   justify-content: center;
   gap: 4px;
-  min-width: 60px;
+  min-width: min-content;
+  max-width: 100%;
 }
 
 .game__score {
@@ -210,12 +228,14 @@ function formatPenalty(value: number | null | undefined) {
 }
 
 .game__meta {
-  max-width: 14rem;
+  max-width: min(14rem, 100%);
+  min-width: 0;
   text-align: center;
   font-size: 11px;
   line-height: 1.35;
   font-weight: 500;
   color: #6b7280;
+  overflow-wrap: anywhere;
 }
 
 .game__goals {
@@ -255,12 +275,32 @@ function formatPenalty(value: number | null | undefined) {
   color: #6b7a6f;
 }
 
+@media (max-width: 640px) {
+  .game {
+    grid-template-columns: 3.35rem minmax(0, 1fr) auto minmax(0, 1fr);
+    padding: 10px 10px;
+    font-size: 13px;
+    gap: 6px 8px;
+  }
+
+  .game__time {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    line-height: 1.2;
+  }
+
+  .game__time-sep {
+    display: none;
+  }
+}
+
 @media (max-width: 480px) {
   .game {
-    grid-template-columns: 55px 1fr auto 1fr;
+    grid-template-columns: 3rem minmax(0, 1fr) auto minmax(0, 1fr);
     padding: 8px 8px;
     font-size: 13px;
-    gap: 4px;
+    gap: 4px 6px;
   }
 
   .game__time {

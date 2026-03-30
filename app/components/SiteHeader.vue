@@ -12,14 +12,16 @@
           <button type="button" role="tab" class="site-header__tab" :class="{ 'site-header__tab--active': publicTab === 'group1' }" :aria-selected="publicTab === 'group1'" @click="publicTab = 'group1'">Groep 1</button>
           <button v-if="hasSecondPoule" type="button" role="tab" class="site-header__tab" :class="{ 'site-header__tab--active': publicTab === 'group2' }" :aria-selected="publicTab === 'group2'" @click="publicTab = 'group2'">Groep 2</button>
           <button type="button" role="tab" class="site-header__tab" :class="{ 'site-header__tab--active': publicTab === 'knockout' }" :aria-selected="publicTab === 'knockout'" @click="publicTab = 'knockout'">Knockout</button>
-          <button type="button" role="tab" class="site-header__tab" :class="{ 'site-header__tab--active': publicTab === 'drinks' }" :aria-selected="publicTab === 'drinks'" @click="publicTab = 'drinks'">Zuipbeker</button>
+          <div class="site-header__schedule-tab-fullrow" role="none">
+            <button type="button" role="tab" class="site-header__tab" :class="{ 'site-header__tab--active': publicTab === 'drinks' }" :aria-selected="publicTab === 'drinks'" @click="publicTab = 'drinks'">Zuipbeker</button>
+          </div>
         </div>
-        <div class="site-header__nav-spacer" />
-        <div class="site-header__social" aria-hidden="true">
+        <div class="site-header__nav-spacer site-header__nav-spacer--desktop" />
+        <div class="site-header__social site-header__social--desktop" aria-hidden="true">
           <a href="#" class="social-icon" @click.prevent title="Facebook">f</a>
           <a href="#" class="social-icon social-icon--ig" @click.prevent title="Instagram">◎</a>
         </div>
-        <NuxtLink to="/admin" class="site-header__tab">Beheer</NuxtLink>
+        <NuxtLink to="/admin" class="site-header__tab site-header__admin-link">Beheer</NuxtLink>
       </div>
     </nav>
   </header>
@@ -100,6 +102,11 @@ const publicTab = defineModel<'group1' | 'group2' | 'knockout' | 'drinks'>('publ
   gap: 8px;
 }
 
+/* Neemt op desktop geen extra ruimte; op mobiel volle breedte + gecentreerde tab */
+.site-header__schedule-tab-fullrow {
+  display: contents;
+}
+
 /* Zelfde als .admin-tab / .admin-tab--active (admin/index.vue) */
 .site-header__tab {
   display: inline-flex;
@@ -178,5 +185,35 @@ a.site-header__tab:hover {
 
 .social-icon--ig {
   font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .site-header__hero-inner {
+    padding-bottom: 16px;
+  }
+
+  .site-header__nav-inner {
+    justify-content: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .site-header__schedule-tabs {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .site-header__schedule-tab-fullrow {
+    display: flex;
+    flex: 1 0 100%;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .site-header__nav-spacer--desktop,
+  .site-header__social--desktop,
+  .site-header__admin-link {
+    display: none !important;
+  }
 }
 </style>

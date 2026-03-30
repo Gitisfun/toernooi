@@ -15,7 +15,8 @@
                     <Game
                       v-for="match in groupSection1.matches"
                       :key="match.id"
-                      :time="formatTime(match)"
+                      :time-start="match.startHour"
+                      :time-end="match.endHour"
                       :home-team="matchSideLabel(match.homeTeam)"
                       :away-team="matchSideLabel(match.awayTeam)"
                       :home-team-tbd="match.homeTeam == null"
@@ -38,12 +39,12 @@
                           <th class="standings-table__th-num">#</th>
                           <th>Team</th>
                           <th class="standings-table__th-num">Wed</th>
-                          <th class="standings-table__th-num">W</th>
-                          <th class="standings-table__th-num">G</th>
-                          <th class="standings-table__th-num">V</th>
+                          <th class="standings-table__th-num standings-table__col--hide-mobile">W</th>
+                          <th class="standings-table__th-num standings-table__col--hide-mobile">G</th>
+                          <th class="standings-table__th-num standings-table__col--hide-mobile">V</th>
                           <th class="standings-table__th-num standings-table__th-num--pts">P</th>
-                          <th class="standings-table__th-num">DV</th>
-                          <th class="standings-table__th-num">DT</th>
+                          <th class="standings-table__th-num standings-table__col--hide-mobile">DV</th>
+                          <th class="standings-table__th-num standings-table__col--hide-mobile">DT</th>
                           <th class="standings-table__th-num">DS</th>
                         </tr>
                       </thead>
@@ -52,12 +53,12 @@
                           <td class="standings-table__num">{{ row.rank }}</td>
                           <td class="standings-table__team">{{ row.team.name }}</td>
                           <td class="standings-table__num">{{ row.played }}</td>
-                          <td class="standings-table__num">{{ row.wins }}</td>
-                          <td class="standings-table__num">{{ row.draws }}</td>
-                          <td class="standings-table__num">{{ row.losses }}</td>
+                          <td class="standings-table__num standings-table__col--hide-mobile">{{ row.wins }}</td>
+                          <td class="standings-table__num standings-table__col--hide-mobile">{{ row.draws }}</td>
+                          <td class="standings-table__num standings-table__col--hide-mobile">{{ row.losses }}</td>
                           <td class="standings-table__num standings-table__num--pts">{{ row.points }}</td>
-                          <td class="standings-table__num">{{ row.goalsFor }}</td>
-                          <td class="standings-table__num">{{ row.goalsAgainst }}</td>
+                          <td class="standings-table__num standings-table__col--hide-mobile">{{ row.goalsFor }}</td>
+                          <td class="standings-table__num standings-table__col--hide-mobile">{{ row.goalsAgainst }}</td>
                           <td class="standings-table__num">{{ row.goalDifference }}</td>
                         </tr>
                       </tbody>
@@ -76,7 +77,8 @@
                     <Game
                       v-for="match in groupSection2.matches"
                       :key="match.id"
-                      :time="formatTime(match)"
+                      :time-start="match.startHour"
+                      :time-end="match.endHour"
                       :home-team="matchSideLabel(match.homeTeam)"
                       :away-team="matchSideLabel(match.awayTeam)"
                       :home-team-tbd="match.homeTeam == null"
@@ -99,12 +101,12 @@
                           <th class="standings-table__th-num">#</th>
                           <th>Team</th>
                           <th class="standings-table__th-num">Wed</th>
-                          <th class="standings-table__th-num">W</th>
-                          <th class="standings-table__th-num">G</th>
-                          <th class="standings-table__th-num">V</th>
+                          <th class="standings-table__th-num standings-table__col--hide-mobile">W</th>
+                          <th class="standings-table__th-num standings-table__col--hide-mobile">G</th>
+                          <th class="standings-table__th-num standings-table__col--hide-mobile">V</th>
                           <th class="standings-table__th-num standings-table__th-num--pts">P</th>
-                          <th class="standings-table__th-num">DV</th>
-                          <th class="standings-table__th-num">DT</th>
+                          <th class="standings-table__th-num standings-table__col--hide-mobile">DV</th>
+                          <th class="standings-table__th-num standings-table__col--hide-mobile">DT</th>
                           <th class="standings-table__th-num">DS</th>
                         </tr>
                       </thead>
@@ -113,12 +115,12 @@
                           <td class="standings-table__num">{{ row.rank }}</td>
                           <td class="standings-table__team">{{ row.team.name }}</td>
                           <td class="standings-table__num">{{ row.played }}</td>
-                          <td class="standings-table__num">{{ row.wins }}</td>
-                          <td class="standings-table__num">{{ row.draws }}</td>
-                          <td class="standings-table__num">{{ row.losses }}</td>
+                          <td class="standings-table__num standings-table__col--hide-mobile">{{ row.wins }}</td>
+                          <td class="standings-table__num standings-table__col--hide-mobile">{{ row.draws }}</td>
+                          <td class="standings-table__num standings-table__col--hide-mobile">{{ row.losses }}</td>
                           <td class="standings-table__num standings-table__num--pts">{{ row.points }}</td>
-                          <td class="standings-table__num">{{ row.goalsFor }}</td>
-                          <td class="standings-table__num">{{ row.goalsAgainst }}</td>
+                          <td class="standings-table__num standings-table__col--hide-mobile">{{ row.goalsFor }}</td>
+                          <td class="standings-table__num standings-table__col--hide-mobile">{{ row.goalsAgainst }}</td>
                           <td class="standings-table__num">{{ row.goalDifference }}</td>
                         </tr>
                       </tbody>
@@ -137,7 +139,8 @@
                     <Game
                       v-for="match in block.matches"
                       :key="match.id"
-                      :time="formatTime(match)"
+                      :time-start="match.startHour"
+                      :time-end="match.endHour"
                       :home-team="matchSideLabel(match.homeTeam)"
                       :away-team="matchSideLabel(match.awayTeam)"
                       :home-team-tbd="match.homeTeam == null"
@@ -170,16 +173,48 @@
 import type { StandingRow, TournamentMatch, TournamentResponse } from '~/types/tournament';
 import { matchSideLabel, normalizeTournamentResponse } from '~/types/tournament';
 
+const route = useRoute();
+const runtimeConfig = useRuntimeConfig();
+const siteName = runtimeConfig.public.siteName as string;
+const siteDescription = runtimeConfig.public.siteDescription as string;
+const ogImageUrl = runtimeConfig.public.ogImageUrl as string;
+
+const pageTitle = 'Speelschema, standen en zuipbeker';
+
+useSeoMeta({
+  title: pageTitle,
+  description: siteDescription,
+  ogTitle: pageTitle,
+  ogDescription: siteDescription,
+  ogType: 'website',
+  ogSiteName: siteName,
+  twitterCard: 'summary_large_image',
+  twitterTitle: pageTitle,
+  twitterDescription: siteDescription,
+  robots: 'index, follow',
+});
+
+if (ogImageUrl) {
+  useSeoMeta({
+    ogImage: ogImageUrl,
+    ogImageSecureUrl: ogImageUrl,
+    twitterImage: ogImageUrl,
+  });
+}
+
+const canonicalUrl = useAbsoluteSiteUrl(route.path);
+if (canonicalUrl) {
+  useHead({
+    link: [{ rel: 'canonical', href: canonicalUrl }],
+  });
+}
+
 const { data, pending, error } = await useFetch<TournamentResponse>('/api/tournament', {
   key: 'tournament',
   transform: (d) => normalizeTournamentResponse(d as TournamentResponse),
 });
 
 const publicTab = ref<'group1' | 'group2' | 'knockout' | 'drinks'>('group1');
-
-function formatTime(match: TournamentMatch) {
-  return `${match.startHour} - ${match.endHour}`;
-}
 
 const groupSections = computed(() => {
   const groups = data.value?.groups;
@@ -281,8 +316,13 @@ watch(
   align-items: start;
 }
 
+.speelschema__schedule {
+  min-width: 0;
+}
+
 .schedule-tab-panel {
   min-height: 120px;
+  min-width: 0;
 }
 
 .drinks-panel--first {
@@ -305,6 +345,7 @@ watch(
 }
 
 .schedule-card {
+  min-width: 0;
   background: var(--color-card);
   border-radius: 14px;
   overflow: hidden;
@@ -317,6 +358,7 @@ watch(
 }
 
 .schedule-card__games {
+  min-width: 0;
   padding: 0;
 }
 
@@ -416,6 +458,12 @@ watch(
 .standings-table__num--pts {
   font-weight: 700;
   color: var(--color-forest);
+}
+
+@media (max-width: 640px) {
+  .standings-table .standings-table__col--hide-mobile {
+    display: none;
+  }
 }
 
 .schedule-state {
