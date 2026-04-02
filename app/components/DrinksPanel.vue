@@ -73,7 +73,7 @@
         </button>
       </div>
       <div v-else class="drinks-card schedule-card">
-        <GroupTitle title="Drank per team" />
+        <GroupTitle title="Zuipbeker" />
         <div class="drinks-table-wrap">
           <table class="drinks-table">
             <thead>

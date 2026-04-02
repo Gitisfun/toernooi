@@ -1,6 +1,9 @@
 <template>
   <div class="app-wrapper">
-    <NuxtPage />
+    <div class="app-wrapper__main">
+      <NuxtPage />
+    </div>
+    <SiteFooter />
   </div>
 </template>
 
@@ -47,8 +50,18 @@ body {
 
 <style scoped>
 .app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   width: 100%;
+}
+
+.app-wrapper__main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 </style>

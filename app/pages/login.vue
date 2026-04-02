@@ -11,14 +11,7 @@
         </label>
         <label class="login-field">
           <span class="login-label">Wachtwoord</span>
-          <input
-            v-model="password"
-            type="password"
-            name="password"
-            autocomplete="current-password"
-            class="login-input"
-            required
-          />
+          <input v-model="password" type="password" name="password" autocomplete="current-password" class="login-input" required />
         </label>
         <p v-if="errorMessage" class="login-error" role="alert">{{ errorMessage }}</p>
         <button type="submit" class="login-submit" :disabled="loading">
@@ -38,7 +31,7 @@ definePageMeta({
 
 useSeoMeta({
   title: 'Inloggen beheer',
-  description: 'Beheerderslogin voor het toernooi Sporting Oppem.',
+  description: 'Beheerderslogin voor het tornooi Sporting Oppem.',
   robots: 'noindex, nofollow',
 });
 
@@ -56,8 +49,7 @@ async function onSubmit() {
     await navigateTo('/admin');
   } catch (e: unknown) {
     const err = e as { data?: { message?: string }; statusMessage?: string };
-    errorMessage.value =
-      err?.data?.message ?? err?.statusMessage ?? 'Inloggen mislukt. Controleer je gegevens.';
+    errorMessage.value = err?.data?.message ?? err?.statusMessage ?? 'Inloggen mislukt. Controleer je gegevens.';
   } finally {
     loading.value = false;
   }
@@ -66,7 +58,7 @@ async function onSubmit() {
 
 <style scoped>
 .login-page {
-  min-height: 100vh;
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;

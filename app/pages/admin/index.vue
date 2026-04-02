@@ -14,61 +14,12 @@
     <div v-if="showLoading" class="admin-loading" role="status">Laden…</div>
     <template v-else-if="tournamentStore.draft">
       <nav class="admin-tabs" aria-label="Beheer-tabs">
-        <button
-          type="button"
-          class="admin-tab"
-          :class="{ 'admin-tab--active': tab === 'group1' }"
-          :aria-selected="tab === 'group1'"
-          @click="tab = 'group1'"
-        >
-          Groep 1
-        </button>
-        <button
-          v-if="hasSecondPoule"
-          type="button"
-          class="admin-tab"
-          :class="{ 'admin-tab--active': tab === 'group2' }"
-          :aria-selected="tab === 'group2'"
-          @click="tab = 'group2'"
-        >
-          Groep 2
-        </button>
-        <button
-          type="button"
-          class="admin-tab"
-          :class="{ 'admin-tab--active': tab === 'knockout' }"
-          :aria-selected="tab === 'knockout'"
-          @click="tab = 'knockout'"
-        >
-          Knockout
-        </button>
-        <button
-          type="button"
-          class="admin-tab"
-          :class="{ 'admin-tab--active': tab === 'teams' }"
-          :aria-selected="tab === 'teams'"
-          @click="tab = 'teams'"
-        >
-          Teams
-        </button>
-        <button
-          type="button"
-          class="admin-tab"
-          :class="{ 'admin-tab--active': tab === 'drinks' }"
-          :aria-selected="tab === 'drinks'"
-          @click="tab = 'drinks'"
-        >
-          Zuipbeker
-        </button>
-        <button
-          type="button"
-          class="admin-tab"
-          :class="{ 'admin-tab--active': tab === 'settings' }"
-          :aria-selected="tab === 'settings'"
-          @click="tab = 'settings'"
-        >
-          Instellingen
-        </button>
+        <button type="button" class="admin-tab" :class="{ 'admin-tab--active': tab === 'group1' }" :aria-selected="tab === 'group1'" @click="tab = 'group1'">Groep 1</button>
+        <button v-if="hasSecondPoule" type="button" class="admin-tab" :class="{ 'admin-tab--active': tab === 'group2' }" :aria-selected="tab === 'group2'" @click="tab = 'group2'">Groep 2</button>
+        <button type="button" class="admin-tab" :class="{ 'admin-tab--active': tab === 'knockout' }" :aria-selected="tab === 'knockout'" @click="tab = 'knockout'">Knockout</button>
+        <button type="button" class="admin-tab" :class="{ 'admin-tab--active': tab === 'teams' }" :aria-selected="tab === 'teams'" @click="tab = 'teams'">Teams</button>
+        <button type="button" class="admin-tab" :class="{ 'admin-tab--active': tab === 'drinks' }" :aria-selected="tab === 'drinks'" @click="tab = 'drinks'">Zuipbeker</button>
+        <button type="button" class="admin-tab" :class="{ 'admin-tab--active': tab === 'settings' }" :aria-selected="tab === 'settings'" @click="tab = 'settings'">Instellingen</button>
       </nav>
 
       <div v-if="isScheduleTab(tab)" class="admin-panel">
@@ -99,7 +50,7 @@ definePageMeta({
 
 useSeoMeta({
   title: 'Beheer toernooi',
-  description: 'Intern beheerpaneel voor het toernooi Sporting Oppem.',
+  description: 'Intern beheerpaneel voor het tornooi Sporting Oppem.',
   robots: 'noindex, nofollow',
 });
 
@@ -122,11 +73,7 @@ watch(hasSecondPoule, (ok) => {
   }
 });
 
-const showLoading = computed(
-  () =>
-    !tournamentStore.initialized ||
-    (tournamentStore.fetchStatus === 'pending' && !tournamentStore.draft),
-);
+const showLoading = computed(() => !tournamentStore.initialized || (tournamentStore.fetchStatus === 'pending' && !tournamentStore.draft));
 
 onMounted(async () => {
   tournamentStore.initClient();
@@ -151,10 +98,12 @@ async function onLogout() {
 
 <style scoped>
 .admin-page {
-  min-height: 100vh;
+  flex: 1;
+  width: 100%;
   padding: 20px var(--layout-pad) 48px;
   max-width: 960px;
   margin: 0 auto;
+  box-sizing: border-box;
 }
 
 .admin-top {

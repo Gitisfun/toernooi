@@ -16,10 +16,8 @@ export default defineNuxtConfig({
       socketUrl: process.env.NUXT_PUBLIC_SOCKET_URL || 'http://localhost:3004',
       /** Publieke basis-URL, zonder slash aan het eind (canonical, Open Graph, sitemap). */
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || '',
-      siteName: process.env.NUXT_PUBLIC_SITE_NAME || 'Toernooi Sporting Oppem',
-      siteDescription:
-        process.env.NUXT_PUBLIC_SITE_DESCRIPTION ||
-        'Live speelschema, standen per groep, knockoutfase en zuipbeker voor het voetbaltoernooi Sporting Oppem te Oppem.',
+      siteName: process.env.NUXT_PUBLIC_SITE_NAME || 'Tornooi Sporting Oppem',
+      siteDescription: process.env.NUXT_PUBLIC_SITE_DESCRIPTION || 'Live speelschema, standen per groep, knockoutfase en zuipbeker voor het voetbaltornooi Sporting Oppem te Oppem op 23 mei 2026.',
       /** Optioneel: absolute URL naar een afbeelding (1200×630) voor og:image / Twitter. */
       ogImageUrl: process.env.NUXT_PUBLIC_OG_IMAGE_URL || '',
     },
@@ -31,7 +29,7 @@ export default defineNuxtConfig({
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
       title: 'Speelschema',
-      titleTemplate: '%s | Toernooi Sporting Oppem',
+      titleTemplate: '%s | Tornooi Sporting Oppem',
       meta: [
         { name: 'format-detection', content: 'telephone=no' },
         { property: 'og:locale', content: 'nl_BE' },

@@ -4,7 +4,7 @@
 
     <section v-if="!tournamentStore.needsTournamentBootstrap" class="admin-settings__section">
       <h2 class="admin-settings__title">Toernooi</h2>
-      <p class="admin-settings__desc">Verwijdert het speelschema op de server (<code class="admin-settings__code">DELETE /tournaments</code> via de BFF). Daarna wordt het schema opnieuw opgehaald.</p>
+      <p class="admin-settings__desc">Verwijdert het volledige speelschema. Daarna wordt het schema opnieuw geladen.</p>
       <p v-if="tournamentStore.deleteTournamentError" class="admin-settings__msg admin-settings__msg--error" role="alert">
         {{ tournamentStore.deleteTournamentError }}
       </p>
@@ -17,7 +17,7 @@
 
     <section v-if="tournamentStore.needsTournamentBootstrap && teamsStore.items.length >= 1" class="admin-settings__section">
       <h2 class="admin-settings__title">Teams</h2>
-      <p class="admin-settings__desc">Verwijdert alle teams op de server (<code class="admin-settings__code">DELETE /teams</code> via de BFF). De lijst wordt daarna opnieuw geladen. Alleen beschikbaar zolang het toernooi nog geen wedstrijden heeft en er minstens één team op de server staat.</p>
+      <p class="admin-settings__desc">Verwijdert alle teams. De lijst wordt daarna opnieuw geladen. Alleen mogelijk zolang er nog geen wedstrijden in het schema staan en er minstens één team bestaat.</p>
       <p v-if="teamsStore.deleteAllTeamsError" class="admin-settings__msg admin-settings__msg--error" role="alert">
         {{ teamsStore.deleteAllTeamsError }}
       </p>
@@ -31,7 +31,7 @@
 
     <section v-if="drinksReady && drinksHasRows" class="admin-settings__section">
       <h2 class="admin-settings__title">Zuipbeker</h2>
-      <p class="admin-settings__desc">Verwijdert alle drankregistraties op de server (<code class="admin-settings__code">DELETE /drinks</code> via de BFF). De lijst wordt daarna opnieuw geladen. Alleen beschikbaar zolang er minstens één regel in de zuipbeker-lijst staat.</p>
+      <p class="admin-settings__desc">Verwijdert alle zuipbeker-registraties. De lijst wordt daarna opnieuw geladen. Alleen mogelijk zolang er minstens één regel in de zuipbeker staat.</p>
       <p v-if="deleteDrinksError" class="admin-settings__msg admin-settings__msg--error" role="alert">
         {{ deleteDrinksError }}
       </p>
@@ -134,14 +134,6 @@ async function onDeleteDrinks() {
   font-size: 14px;
   line-height: 1.55;
   color: #374151;
-}
-
-.admin-settings__code {
-  font-size: 12px;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background: #f3f4f6;
-  color: #1f2937;
 }
 
 .admin-settings__msg {

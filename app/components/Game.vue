@@ -2,7 +2,7 @@
   <div class="game" :class="{ 'game--played': isPlayed }">
     <div class="game__time">
       <span class="game__time-start">{{ timeStart }}</span>
-      <span class="game__time-sep" aria-hidden="true"> - </span>
+      <span class="game__time-sep" style="margin-left: 4px; margin-right: 3px" aria-hidden="true">-</span>
       <span class="game__time-end">{{ timeEnd }}</span>
     </div>
     <div class="game__home" :class="{ 'game__team--winner': homeWins, 'game__team--tbd': homeTeamTbd }">

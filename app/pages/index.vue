@@ -12,22 +12,24 @@
                 <div class="schedule-card schedule-card--spaced schedule-card--first-in-panel">
                   <GroupTitle title="Groep 1 — terrein 1" />
                   <div class="schedule-card__games">
-                    <Game
-                      v-for="match in groupSection1.matches"
-                      :key="match.id"
-                      :time-start="match.startHour"
-                      :time-end="match.endHour"
-                      :home-team="matchSideLabel(match.homeTeam)"
-                      :away-team="matchSideLabel(match.awayTeam)"
-                      :home-team-tbd="match.homeTeam == null"
-                      :away-team-tbd="match.awayTeam == null"
-                      :home-goals="match.homeTeamScore"
-                      :away-goals="match.awayTeamScore"
-                      :home-penalties="match.penaltyHomeTeamScore"
-                      :away-penalties="match.penaltyAwayTeamScore"
-                      :terrain="match.terrain"
-                      :description="match.description"
-                    />
+                    <template v-for="row in group1ScheduleRows" :key="scheduleRowKey(row, groupSection1.key)">
+                      <Game
+                        v-if="row.type === 'match'"
+                        :time-start="row.match.startHour"
+                        :time-end="row.match.endHour"
+                        :home-team="matchSideLabel(row.match.homeTeam)"
+                        :away-team="matchSideLabel(row.match.awayTeam)"
+                        :home-team-tbd="row.match.homeTeam == null"
+                        :away-team-tbd="row.match.awayTeam == null"
+                        :home-goals="row.match.homeTeamScore"
+                        :away-goals="row.match.awayTeamScore"
+                        :home-penalties="row.match.penaltyHomeTeamScore"
+                        :away-penalties="row.match.penaltyAwayTeamScore"
+                        :terrain="row.match.terrain"
+                        :description="row.match.description"
+                      />
+                      <MiddagpauzeRow v-else />
+                    </template>
                   </div>
                 </div>
                 <div v-if="standingsRowsGroup1.length" class="schedule-card schedule-card--spaced">
@@ -65,6 +67,7 @@
                     </table>
                   </div>
                 </div>
+                <StandingsRotateHint v-if="standingsRowsGroup1.length" />
               </template>
               <p v-else class="schedule-empty">Geen wedstrijden voor groep 1.</p>
             </div>
@@ -74,22 +77,24 @@
                 <div class="schedule-card schedule-card--spaced schedule-card--first-in-panel">
                   <GroupTitle title="Groep 2 — terrein 2" />
                   <div class="schedule-card__games">
-                    <Game
-                      v-for="match in groupSection2.matches"
-                      :key="match.id"
-                      :time-start="match.startHour"
-                      :time-end="match.endHour"
-                      :home-team="matchSideLabel(match.homeTeam)"
-                      :away-team="matchSideLabel(match.awayTeam)"
-                      :home-team-tbd="match.homeTeam == null"
-                      :away-team-tbd="match.awayTeam == null"
-                      :home-goals="match.homeTeamScore"
-                      :away-goals="match.awayTeamScore"
-                      :home-penalties="match.penaltyHomeTeamScore"
-                      :away-penalties="match.penaltyAwayTeamScore"
-                      :terrain="match.terrain"
-                      :description="match.description"
-                    />
+                    <template v-for="row in group2ScheduleRows" :key="scheduleRowKey(row, groupSection2.key)">
+                      <Game
+                        v-if="row.type === 'match'"
+                        :time-start="row.match.startHour"
+                        :time-end="row.match.endHour"
+                        :home-team="matchSideLabel(row.match.homeTeam)"
+                        :away-team="matchSideLabel(row.match.awayTeam)"
+                        :home-team-tbd="row.match.homeTeam == null"
+                        :away-team-tbd="row.match.awayTeam == null"
+                        :home-goals="row.match.homeTeamScore"
+                        :away-goals="row.match.awayTeamScore"
+                        :home-penalties="row.match.penaltyHomeTeamScore"
+                        :away-penalties="row.match.penaltyAwayTeamScore"
+                        :terrain="row.match.terrain"
+                        :description="row.match.description"
+                      />
+                      <MiddagpauzeRow v-else />
+                    </template>
                   </div>
                 </div>
                 <div v-if="standingsRowsGroup2.length" class="schedule-card schedule-card--spaced">
@@ -127,6 +132,7 @@
                     </table>
                   </div>
                 </div>
+                <StandingsRotateHint v-if="standingsRowsGroup2.length" />
               </template>
               <p v-else class="schedule-empty">Geen tweede poule in dit schema.</p>
             </div>
@@ -154,6 +160,9 @@
                     />
                   </div>
                 </div>
+                <div class="schedule-card schedule-card--spaced">
+                  <EindeToernooiRow />
+                </div>
               </template>
               <p v-else class="schedule-empty">Nog geen knockoutwedstrijden in het schema.</p>
             </div>
@@ -172,6 +181,7 @@
 <script setup lang="ts">
 import type { StandingRow, TournamentMatch, TournamentResponse } from '~/types/tournament';
 import { matchSideLabel, normalizeTournamentResponse } from '~/types/tournament';
+import { groupMatchesWithMiddagPauze, type GroupScheduleRow } from '~/utils/group-schedule-rows';
 
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
@@ -238,6 +248,22 @@ const groupSections = computed(() => {
 const groupSection1 = computed(() => groupSections.value[0] ?? null);
 const groupSection2 = computed(() => groupSections.value[1] ?? null);
 
+const group1ScheduleRows = computed((): GroupScheduleRow[] => {
+  const m = groupSection1.value?.matches;
+  if (!m?.length) return [];
+  return groupMatchesWithMiddagPauze(m);
+});
+
+const group2ScheduleRows = computed((): GroupScheduleRow[] => {
+  const m = groupSection2.value?.matches;
+  if (!m?.length) return [];
+  return groupMatchesWithMiddagPauze(m);
+});
+
+function scheduleRowKey(row: GroupScheduleRow, groupKey: string): string {
+  return row.type === 'match' ? row.match.id : `middagpauze-${groupKey}`;
+}
+
 function groupHeading(round: string, key: string) {
   const m = round.match(/^group\s+(.+)$/i);
   const suffix = m?.[1];
@@ -297,9 +323,10 @@ watch(
 
 <style scoped>
 .speelschema {
-  min-height: 100vh;
+  flex: 1;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .speelschema__main {
