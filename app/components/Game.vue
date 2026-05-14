@@ -277,10 +277,12 @@ function formatPenalty(value: number | null | undefined) {
 
 @media (max-width: 640px) {
   .game {
-    grid-template-columns: 3.35rem minmax(0, 1fr) auto minmax(0, 1fr);
+    /* Narrower time track + smaller column gap: more width for team names on small screens */
+    grid-template-columns: 2.85rem minmax(0, 1fr) auto minmax(0, 1fr);
     padding: 10px 10px;
-    font-size: 13px;
-    gap: 6px 8px;
+    font-size: 12px;
+    row-gap: 6px;
+    column-gap: 5px;
   }
 
   .game__time {
@@ -288,6 +290,14 @@ function formatPenalty(value: number | null | undefined) {
     align-items: flex-start;
     gap: 2px;
     line-height: 1.2;
+    font-size: 11px;
+  }
+
+  .game__home,
+  .game__away {
+    font-size: 12px;
+    word-break: normal;
+    overflow-wrap: break-word;
   }
 
   .game__time-sep {
@@ -297,13 +307,19 @@ function formatPenalty(value: number | null | undefined) {
 
 @media (max-width: 480px) {
   .game {
-    grid-template-columns: 3rem minmax(0, 1fr) auto minmax(0, 1fr);
+    grid-template-columns: 2.65rem minmax(0, 1fr) auto minmax(0, 1fr);
     padding: 8px 8px;
-    font-size: 13px;
-    gap: 4px 6px;
+    font-size: 11px;
+    row-gap: 4px;
+    column-gap: 4px;
   }
 
   .game__time {
+    font-size: 10px;
+  }
+
+  .game__home,
+  .game__away {
     font-size: 11px;
   }
 
